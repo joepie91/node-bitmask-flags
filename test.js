@@ -29,6 +29,8 @@ var permissions = flagHandler.create(0, 0); // Like we saw before...
 
 permissions.add("create_announcements"); // The user now has `create_announcements` AND `edit_anouncements`.
 
+console.log(permissions.getFlags());
+
 console.log(true, permissions.has("edit_announcements")); // true
 
 permissions.remove("create_announcements"); // The user now has no permissions.

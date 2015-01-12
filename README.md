@@ -8,6 +8,12 @@ While the examples in this documentation will show usage for a permission system
 
 [WTFPL](http://www.wtfpl.net/txt/copying/) or [CC0](https://creativecommons.org/publicdomain/zero/1.0/), whichever you prefer.
 
+## Donate
+
+My income consists entirely of donations for my projects. If this module is useful to you, consider [making a donation](http://cryto.net/~joepie91/donate.html)!
+
+You can donate using Bitcoin, PayPal, Gratipay, Flattr, cash-in-mail, SEPA transfers, and pretty much anything else.
+
 ## Contributing
 
 Pull requests welcome. Please make sure your modifications are in line with the overall code style, and ensure that you're editing the `.coffee` files, not the `.js` files.
@@ -94,3 +100,95 @@ user.save(); // Done! The inheritance structure will persist, even through datab
 ```
 
 In this example, `getValue()` will return the effective value (ie. all flags that are set), while `getOriginalValue()` will only return a value consisting of the *explicitly* set flags. This second value is what is used to keep track of inherited permissions, and should be passed as a second argument to `.create` when creating a new value.
+
+
+## API
+
+### bitmaskFlags(flagMap)
+
+Returns a new bitmaskFlags instance with the given `flagMap`. The `flagMap` is an object that maps flag names to values and, optionally, inheritances.
+
+Each value in the `flagMap` object can either be an object with options, or a number directly. All values should be powers of two. See the Example section for a usage example.
+
+An Error is thrown if there is a problem with the flagMap; eg. one of the values is not a power of two, or one of the inheritances refers to a non-existent flag.
+
+The rest of the API documentation will refer to the returned value as `flagHandler`.
+
+### flagHandler.create([initialValue, [initialOriginalValue]])
+
+Creates a new value.
+
+* __initialValue__: The initial value it should be set to. This is typically the current value from a database. Defaults to 0 (no flags set).
+* __initialOriginalValue__: The initial 'original value', when using flag inheritance. This is the value that represents the *explicitly* set flags, so that they are not automatically unset through inheritance. Leaving this out will make inheritance very unpleasant to work with; however, if you do not use inheritance, you can omit this option. __For a 'blank' value, you *must* explicitly set this to 0.__
+
+The rest of the API documentation will refer to the returned value as `flagValue`.
+
+### flagHandler.setFlagMap(flagMap)
+
+Replaces the current `flagMap` of the handler with a new one. The same sanity checks are performed as for `bitmaskFlags(flagMap)`, and the same input is accepted.
+
+### flagHandler.getflagMap()
+
+Returns the current `flagMap`.
+
+### flagHandler.getInheritedFlags(flag)
+
+Returns an array of flags that inherited from the specified flag.
+
+* __flag__: The name of the flag to return the inheritances for. An Error is thrown if it does not exist.
+
+### flagHandler.getFlagValue(flag)
+
+Returns the internal bitmask value for the specified flag. This is the value originally specified in the `flagMap`.
+
+*You almost certainly won't need this; look at the `flagValue` API methods instead.*
+
+* __flag__: The flag to return the internal bitmask value for. An Error is thrown if it does not exist.
+
+### flagValue.add(flag)
+
+Sets the flag (if it is not yet set). Also sets any inherited flags.
+
+* __flag__: The name of the flag to set. An Error is thrown if it does not exist.
+
+### flagValue.remove(flag)
+
+Unsets the flag (if it is set). Also unsets any inherited flags, except for those that were *explicitly* set (assuming an initialOriginalValue was specified).
+
+* __flag__: The name of the flag to unset. An Error is thrown if it does not exist.
+
+### flagValue.has(flag)
+
+Returns whether the specified flag is set or not.
+
+* __flag__: The flag to check. An Error is thrown if it does not exist.
+
+### flagValue.getValue()
+
+Returns the current value as a Number. This is what you'll want to use for storing the effective value in a database.
+
+It is the value that you will pass to `flagHandler.create([initialValue, [initialOriginalValue]])` as the first argument (`initialValue`).
+
+### flagValue.getOriginalValue()
+
+Returns the current 'original value' as a Number. This represents the explicitly set flags, and you will have to store this in your database as a separate value for full inheritance support.
+
+It is the value that you will pass to `flagHandler.create([initialValue, [initialOriginalValue]])` as the second argument (`initialOriginalValue`).
+
+### flagValue.getFlags()
+
+Returns an array of all the flags (names, not values) that are set in the current value, both explicit and inherited.
+
+*You probably won't need this, unless you're trying to debug something.*
+
+## Changelog
+
+### v0.0.2
+
+* More exposed API methods: `getFlagMap`, `getFlags` and `getInheritedFlags`.
+* Documentation update; now with a full API documentation and a changelog!
+* Shuffled around some functions, so that they are in a sensible place.
+
+### v0.0.1
+
+Initial release.
