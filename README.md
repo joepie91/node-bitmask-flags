@@ -92,3 +92,5 @@ user.permissions = permissions.getValue();
 user.originalPermissions = permissions.getOriginalValue();
 user.save(); // Done! The inheritance structure will persist, even through database loads and saves.
 ```
+
+In this example, `getValue()` will return the effective value (ie. all flags that are set), while `getOriginalValue()` will only return a value consisting of the *explicitly* set flags. This second value is what is used to keep track of inherited permissions, and should be passed as a second argument to `.create` when creating a new value.
