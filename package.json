@@ -1,5 +1,5 @@
 {
-  "name": "node-bitmask-flags",
+  "name": "bitmask-flags",
   "version": "0.0.1",
   "description": "A utility for dealing with flags and permissions using bitmasks.",
   "main": "index.js",
