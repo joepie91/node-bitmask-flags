@@ -1,6 +1,6 @@
 {
   "name": "bitmask-flags",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "A utility for dealing with flags and permissions using bitmasks.",
   "main": "index.js",
   "scripts": {
