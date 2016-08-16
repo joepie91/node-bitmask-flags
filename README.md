@@ -10,9 +10,9 @@ While the examples in this documentation will show usage for a permission system
 
 ## Donate
 
-My income consists entirely of donations for my projects. If this module is useful to you, consider [making a donation](http://cryto.net/~joepie91/donate.html)!
+Maintaining open-source projects takes a lot of time, and the more donations I receive, the more time I can dedicate to open-source. If this module is useful to you, consider [making a donation](http://cryto.net/~joepie91/donate.html)!
 
-You can donate using Bitcoin, PayPal, Gratipay, Flattr, cash-in-mail, SEPA transfers, and pretty much anything else.
+You can donate using Bitcoin, PayPal, Flattr, cash-in-mail, SEPA transfers, and pretty much anything else. Thank you!
 
 ## Contributing
 
@@ -182,15 +182,3 @@ It is the value that you will pass to `flagHandler.create([initialValue, [initia
 Returns an array of all the flags (names, not values) that are set in the current value, both explicit and inherited.
 
 *You probably won't need this, unless you're trying to debug something.*
-
-## Changelog
-
-### v0.0.2
-
-* More exposed API methods: `getFlagMap`, `getFlags` and `getInheritedFlags`.
-* Documentation update; now with a full API documentation and a changelog!
-* Shuffled around some functions, so that they are in a sensible place.
-
-### v0.0.1
-
-Initial release.
